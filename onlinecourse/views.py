@@ -12,6 +12,13 @@ import logging
 logger = logging.getLogger(__name__)
 # Create your views here.
 
+def index(request):
+    # Create a simple html page as a string
+    template = "<html>" \
+                "This is your first view" \
+               "</html>"
+    # Return the template as content argument in HTTP response
+    return HttpResponse(content=template)
 
 def registration_request(request):
     context = {}
