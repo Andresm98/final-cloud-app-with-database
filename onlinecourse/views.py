@@ -160,7 +160,7 @@ def show_exam_result(request, course_id, submission_id):
     for choice in submission.choices.all():
         choices_set.append(choice.id)
 
-    #     print('Hello how low!', choice.choice_text)
+    # print('Hello how low!', choice.choice_text)
     # print('GG ==> ', choices_set)
 
     # general_average 
@@ -168,22 +168,19 @@ def show_exam_result(request, course_id, submission_id):
     for general_average in course.question_set.all():
         average_total+=general_average.grade
 
-    # Return all questions on a course
-    for average_question in course.question_set.all():
-        print ("MIAMI " , average_question.question_text)
-        print ("MIAMI " , average_question.grade)
-
-        for evaluate_c in choices_set:
-            eva = get_object_or_404(Choice, pk=evaluate_c) 
-            print('Section update: ', eva.is_correct )
-            print('Section update: ', eva.question.grade )
-
-        # Count all correct answers
+    # Calculate average
+    final_average = 0
+    for evaluate_c in choices_set:
+        eva = get_object_or_404(Choice, pk=evaluate_c)  
+        pivote = Choice.objects.filter(question=eva.question.id, is_correct=True).count()
+        if eva.is_correct:
+            final_average+= (eva.question.grade/pivote)
+   
 
     return render(
             request, 
             'onlinecourse/show_exam_result.html',
-            {'course': course, 'submission': submission}
+            {'course': course, 'submission': submission, 'final_average': final_average,'choices_set': choices_set}
         )
 
 

@@ -39,7 +39,26 @@
 
     <h2>Review ur score, please. {{course.name}}</h2>
 
-    <p></p>
+    <div class="container-fluid">
+        {% if final_average > 80 %}
+        <div class="alert alert-success">
+          <strong> Good job, congratulations, {{ user.first_name }}!</strong> You have passed the exam and completed the course with score  {{final_average}}/100
+        </div>
+            {% else %}
+            <div class="alert alert-danger">
+                <strong> {{ user.first_name }} Sorry!</strong> You have failed exam with score {{final_average}}/100.
+            </div>
+            <a class="btn btn-link text-danger" href="{% url 'onlinecourse:course_details' course.id %}">Re-test</a>
+            {% endif %}
+            <div class="card-columns-vertical mt-1">
+            <h5 class="">Exam results</h5>
+                <!--HINT Display exam results-->
+            </div>
+        </div>
+
+        <p class="font-weight-bold text-success">.text-success</p>
+        <p class="font-weight-bold text-danger">.text-danger</p>
+        <p class="font-weight-bold text-warning">.text-warning</p>
 
     <div class="card-body">
         {% for question in course.question_set.all %}
@@ -48,12 +67,19 @@
                 <div class="card-body">
                     <div class="form-check">
                         {% for choice in question.choice_set.all %}
+
+                            {% for selectchoice in choices_set %}
+
+
+                            {% endfor %}
                             <h6 class="form-check-label">
                                {{ choice.id }}
                                {{ choice.choice_text }}
                                {{ choice.is_correct }}
                             </h6> 
                             <br>
+
+                            
                         {% endfor %}
                     </div>
                 </div>
