@@ -159,8 +159,11 @@ def show_exam_result(request, course_id, submission_id):
     for choice in submission.choices.all():
         print('Hello how low!', choice.choice_text)
 
-    return render(request, 'onlinecourse/show_exam_result.html')
-
+    return render(
+            request, 
+            'onlinecourse/show_exam_result.html',
+            {'course': course, 'submission': submission}
+        )
 
 
 

@@ -37,7 +37,7 @@
 
 <div class="card-columns-vertical">
 
-    <h2>Review ur score, please.</h2>
+    <h2>Review ur score, please. {{course.name}}</h2>
 
     <p></p>
 
@@ -48,11 +48,11 @@
                 <div class="card-body">
                     <div class="form-check">
                         {% for choice in question.choice_set.all %}
-                            <label class="form-check-label">
-                                <input type="checkbox" name="choice_{{choice.id}}"
-                                    class="form-check-input" id="{{choice.id}}"
-                                    value="{{choice.id}}">{{ choice.choice_text }}
-                            </label> 
+                            <h6 class="form-check-label">
+                               {{ choice.id }}
+                               {{ choice.choice_text }}
+                               {{ choice.is_correct }}
+                            </h6> 
                             <br>
                         {% endfor %}
                     </div>
