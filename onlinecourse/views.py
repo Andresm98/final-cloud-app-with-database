@@ -120,10 +120,14 @@ def enroll(request, course_id):
 def submit(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     user = request.user
-    extract_answers(request)
+
     enrollment = Enrollment.objects.get(user=user, course=course)
 
+    choices = extract_answers(request)
+
     submission = Submission.objects.create(enrollment=enrollment)
+    submission.choices.set(choices) 
+    submission.save()
 
     return HttpResponseRedirect(reverse(viewname='onlinecourse:show_exam_result', args=(course.id, submission.id,)))
 
@@ -147,6 +151,14 @@ def extract_answers(request):
         # Calculate the total score
 def show_exam_result(request, course_id, submission_id):
     
+    course = get_object_or_404(Course, pk=course_id)
+    submission = get_object_or_404(Submission, pk=submission_id)
+
+    print("Generate on data empty choices ==> ", submission.choices.all() ," <== CJS")
+
+    for choice in submission.choices.all():
+        print('Hello how low!', choice.choice_text)
+
     return render(request, 'onlinecourse/show_exam_result.html')
 
 

@@ -35,8 +35,33 @@
     </div>
 </nav>
 
-    <div class="container-fluid">
-        ddd JSJKHSD
-    </div>
+<div class="card-columns-vertical">
+
+    <h2>Review ur score, please.</h2>
+
+    <p></p>
+
+    <div class="card-body">
+        {% for question in course.question_set.all %}
+            <div class="card mt-1">
+                <div class="card-header"><h5>Question {{question.order|add:1}}: {{question.question_text}}</h5></div>
+                <div class="card-body">
+                    <div class="form-check">
+                        {% for choice in question.choice_set.all %}
+                            <label class="form-check-label">
+                                <input type="checkbox" name="choice_{{choice.id}}"
+                                    class="form-check-input" id="{{choice.id}}"
+                                    value="{{choice.id}}">{{ choice.choice_text }}
+                            </label> 
+                            <br>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+  </div>
+
+</div>
+
 </body>
 </html>
