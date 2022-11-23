@@ -156,8 +156,29 @@ def show_exam_result(request, course_id, submission_id):
 
     print("Generate on data empty choices ==> ", submission.choices.all() ," <== CJS")
 
+    choices_set = []
     for choice in submission.choices.all():
-        print('Hello how low!', choice.choice_text)
+        choices_set.append(choice.id)
+
+    #     print('Hello how low!', choice.choice_text)
+    # print('GG ==> ', choices_set)
+
+    # general_average 
+    average_total = 0
+    for general_average in course.question_set.all():
+        average_total+=general_average.grade
+
+    # Return all questions on a course
+    for average_question in course.question_set.all():
+        print ("MIAMI " , average_question.question_text)
+        print ("MIAMI " , average_question.grade)
+
+        for evaluate_c in choices_set:
+            eva = get_object_or_404(Choice, pk=evaluate_c) 
+            print('Section update: ', eva.is_correct )
+            print('Section update: ', eva.question.grade )
+
+        # Count all correct answers
 
     return render(
             request, 
